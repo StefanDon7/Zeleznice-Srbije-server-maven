@@ -10,6 +10,8 @@ import rs.stefanlezaic.zeleznice.srbije.lib.domen.Klijent;
 import rs.stefanlezaic.zeleznice.srbije.lib.exception.InsertEntityException;
 import rs.stefanlezaic.zeleznice.srbije.lib.exception.InvalidProductException;
 import java.sql.SQLException;
+import rs.stefanlezaic.zeleznice.srbije.server.email.sender.EmailVerification;
+import rs.stefanlezaic.zeleznice.srbije.server.email.sender.Mail;
 import rs.stefanlezaic.zeleznice.srbije.server.so.AbstractGenericOperation;
 
 /**
@@ -31,12 +33,17 @@ public class SOUnesiKlijenta extends AbstractGenericOperation {
      */
     @Override
     protected void validate(Object entity) throws InvalidProductException, Exception {
+        EmailVerification emailVerification=new EmailVerification();
+        
         if (!(entity instanceof Klijent)) {
             throw new Exception("Exception!" + "\n" + "Objekat nije instanca date klase!");
         }
         Klijent k = (Klijent) entity;
         if (k.getEmail().isEmpty() || k.getIme().isEmpty() || k.getPrezime().isEmpty() || k.getKorisnickoIme().isEmpty() || k.getLozinka().isEmpty()) {
             throw new InvalidProductException("Sva polja moraju biti popunjena!!");
+        }
+        if(!(emailVerification.validate(k.getEmail()))){
+            throw new InvalidProductException("Validacija email adrese nije uspela!");
         }
 
     }
@@ -52,8 +59,11 @@ public class SOUnesiKlijenta extends AbstractGenericOperation {
     
     @Override
     protected void execute(Object entity) throws InsertEntityException, SQLException {
+        Mail m=new Mail();
         try {
             databaseBroker.insertRecord((GeneralEntity) entity);
+            Klijent k=(Klijent) entity;
+            m.sendRegistrationMail(k.getEmail());
         } catch (InsertEntityException ex) {
             throw new InsertEntityException("Sistem ne moze da registruje korisnika");
         } catch (SQLException ex) {

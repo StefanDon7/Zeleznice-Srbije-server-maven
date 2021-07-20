@@ -18,12 +18,14 @@ import rs.stefanlezaic.zeleznice.srbije.lib.domen.Voz;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import rs.stefanlezaic.zeleznice.srbije.server.email.sender.Mail;
 import rs.stefanlezaic.zeleznice.srbije.server.so.AbstractGenericOperation;
 import rs.stefanlezaic.zeleznice.srbije.server.soKlijent.SOIzmeniKlijenta;
 import rs.stefanlezaic.zeleznice.srbije.server.soKlijent.SOUnesiKlijenta;
 import rs.stefanlezaic.zeleznice.srbije.server.soKlijent.SOVratiKlijenta;
 import rs.stefanlezaic.zeleznice.srbije.server.soKlijent.SOVratiKlijentaBezPrimarnogKljuca;
 import rs.stefanlezaic.zeleznice.srbije.server.soKlijent.SOVratiSveKlijente;
+import rs.stefanlezaic.zeleznice.srbije.server.soKlijent.SOVratiSveKlijenteZaPolazak;
 import rs.stefanlezaic.zeleznice.srbije.server.soLinija.SOObrisiLiniju;
 import rs.stefanlezaic.zeleznice.srbije.server.soLinija.SOUnesiLiniju;
 import rs.stefanlezaic.zeleznice.srbije.server.soLinija.SOVratiLiniju;
@@ -39,6 +41,7 @@ import rs.stefanlezaic.zeleznice.srbije.server.soMesta.SOVratiSvaMesta;
 import rs.stefanlezaic.zeleznice.srbije.server.soPolazak.SOIzmeniPolazak;
 import rs.stefanlezaic.zeleznice.srbije.server.soPolazak.SOObrisiPolazak;
 import rs.stefanlezaic.zeleznice.srbije.server.soPolazak.SOUnesiPolazak;
+import rs.stefanlezaic.zeleznice.srbije.server.soPolazak.SOVratiPolazak;
 import rs.stefanlezaic.zeleznice.srbije.server.soPolazak.SOVratiPolazakZaDatum;
 import rs.stefanlezaic.zeleznice.srbije.server.soPolazak.SOVratiSvePolaske;
 import rs.stefanlezaic.zeleznice.srbije.server.soPolazak.SOVratiSvePolaskeZaDatumPocetnuKrajnuStanicu;
@@ -77,6 +80,12 @@ public class Kontroler {
         op6.templateExecute(new Polazak());
         List<GeneralEntity> lista = ((SOVratiSvePolaske) op6).getPolasci();
         return lista;
+    }
+
+    public GeneralEntity vratiPolazak(Polazak p) throws Exception {
+        AbstractGenericOperation op6 = new SOVratiPolazak();
+        op6.templateExecute(p);
+        return (Polazak) ((SOVratiPolazak) op6).getPolazak();
     }
 
     public List<GeneralEntity> vratiMiSveStanice() throws Exception {
@@ -179,11 +188,10 @@ public class Kontroler {
         }
     }
 
-    public void updejtujMiPolaske(ArrayList<Polazak> polasciZaMenjanje) throws Exception {
-        for (Polazak polazak : polasciZaMenjanje) {
-            AbstractGenericOperation op6 = new SOIzmeniPolazak();
-            op6.templateExecute(polazak);
-        }
+    public void izmeniPolazak(Polazak polazak) throws Exception {
+        AbstractGenericOperation op6 = new SOIzmeniPolazak();
+        op6.templateExecute(polazak);
+        posaljiMailSvimKorisnicima(polazak);
     }
 
     public void obrisiLiniju(Linija l) throws Exception {
@@ -294,6 +302,29 @@ public class Kontroler {
         op5.templateExecute(medjustanica);
         List<GeneralEntity> lista = ((SOVratiSveMedjustaniceZaLiniju) op5).getMedjustanice();
         return lista;
+    }
+
+    private String[] pronadjiSveEmailove(Polazak p) throws Exception {
+        AbstractGenericOperation op1 = new SOVratiSveKlijenteZaPolazak();
+        op1.templateExecute(p);
+        List<GeneralEntity> lista = ((SOVratiSveKlijenteZaPolazak) op1).getKlijenti();
+        if (!lista.isEmpty()) {
+            String[] emails = new String[lista.size()];
+            for (int i = 0; i < lista.size(); i++) {
+                Klijent klijent = (Klijent) lista.get(i);
+                emails[i] = klijent.getEmail();
+            }
+            return emails;
+        }
+        return null;
+    }
+
+    private void posaljiMailSvimKorisnicima(Polazak polazak) throws Exception {
+        Mail mail = new Mail();
+        String[] emails = pronadjiSveEmailove(polazak);
+        if (emails != null) {
+            mail.sendMail(emails, polazak);
+        }
     }
 
 }

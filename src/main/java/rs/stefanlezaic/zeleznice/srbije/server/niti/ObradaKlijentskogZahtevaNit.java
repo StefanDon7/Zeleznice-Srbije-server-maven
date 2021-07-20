@@ -40,11 +40,11 @@ public class ObradaKlijentskogZahtevaNit extends Thread {
             handleRequest();
         } catch (java.net.SocketException ex) {
             System.out.println("Klijent se odjavio!");
-        }  catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(ObradaKlijentskogZahtevaNit.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ObradaKlijentskogZahtevaNit.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 
     private void handleRequest() throws IOException, ClassNotFoundException {
@@ -82,6 +82,12 @@ public class ObradaKlijentskogZahtevaNit extends Thread {
                     case Konstante.VRATI_VOZOVE:
                         List<GeneralEntity> listaVozova = Kontroler.getInstance().vratiMiSveVozove();
                         so.setOdgovor(listaVozova);
+                        so.setStatus(ResponseStatus.OK);
+                        break;
+                    case Konstante.VRATI_POLAZAK:
+                        Polazak polazak1=(Polazak) kz.getParametar();
+                        Polazak polazak2 = (Polazak) Kontroler.getInstance().vratiPolazak(polazak1);
+                        so.setOdgovor(polazak2);
                         so.setStatus(ResponseStatus.OK);
                         break;
                     case Konstante.VRATI_TIPOVE_LINIJA:
@@ -145,8 +151,8 @@ public class ObradaKlijentskogZahtevaNit extends Thread {
                         so.setStatus(ResponseStatus.OK);
                         break;
                     case Konstante.IZMENI_POLASKE:
-                        ArrayList<Polazak> listaPolazakaZaMenjanje = (ArrayList<Polazak>) kz.getParametar();
-                        Kontroler.getInstance().updejtujMiPolaske(listaPolazakaZaMenjanje);
+                        Polazak polazak = (Polazak) kz.getParametar();
+                        Kontroler.getInstance().izmeniPolazak(polazak);
                         so.setStatus(ResponseStatus.OK);
                         break;
                     case Konstante.OBRISI_POLAZAK:

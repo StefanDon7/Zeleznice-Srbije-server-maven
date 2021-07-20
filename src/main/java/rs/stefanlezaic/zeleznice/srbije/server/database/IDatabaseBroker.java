@@ -23,6 +23,8 @@ public interface IDatabaseBroker {
     
     List<GeneralEntity> findAllDeparture(GeneralEntity entity,Polazak p) throws SQLException;
     
+     List<GeneralEntity> getAllKlijent(GeneralEntity entity,Polazak p) throws SQLException;
+    
     void insertRecord(GeneralEntity entity) throws SQLException, InsertEntityException;
 
     void deleteRecord(GeneralEntity entity) throws SQLException, DeleteEntityException;

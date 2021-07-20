@@ -36,11 +36,11 @@ public class SOVratiKlijenta extends AbstractGenericOperation {
     @Override
     protected void validate(Object entity) throws Exception, InvalidProductException {
         if (!(entity instanceof Klijent)) {
-            throw new Exception("Pogresni paremetri");
+            throw new Exception("Nije inastanca klijenta!");
         }
         Klijent k = (Klijent) entity;
         if (k.getKlijentID() <= 0) {
-            throw new InvalidProductException("Primarni kljuc je 0 ili manji od nule!");
+            throw new InvalidProductException("Primarni kljuc ne sme biti manje od 1.");
         }
     }
     
