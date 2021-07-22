@@ -15,11 +15,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-import rs.stefanlezaic.zeleznice.srbije.lib.domen.Klijent;
 import rs.stefanlezaic.zeleznice.srbije.lib.domen.Linija;
 import rs.stefanlezaic.zeleznice.srbije.lib.domen.Mesto;
 import rs.stefanlezaic.zeleznice.srbije.lib.domen.Polazak;
-import rs.stefanlezaic.zeleznice.srbije.lib.domen.Rezervacija;
 import rs.stefanlezaic.zeleznice.srbije.lib.domen.Stanica;
 import rs.stefanlezaic.zeleznice.srbije.lib.domen.TipLinije;
 import rs.stefanlezaic.zeleznice.srbije.lib.domen.Voz;
@@ -110,8 +108,6 @@ public class TestPolazak {
         } catch (ParseException ex) {
             Logger.getLogger(TestPolazak.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        p=new Polazak(10);
-//        p2=new Polazak(123);
         p=new Polazak(10, "naziv", datum1, datum2, l, voz);
         p2=new Polazak(123,"naziv", datum1,datum2,l,voz);
         assertFalse(p.equals(p2));

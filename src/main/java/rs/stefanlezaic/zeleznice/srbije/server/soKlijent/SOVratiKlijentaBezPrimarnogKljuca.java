@@ -13,26 +13,27 @@ import java.sql.SQLException;
 import rs.stefanlezaic.zeleznice.srbije.server.so.AbstractGenericOperation;
 
 /**
- * Klasa sistemska operacija vrati klijenta koja nasledjuje abstraktnu klasu AbstractGenericOperation.
- * Vraca klijenta iz baze na osnovu emaila i lozinke.
+ * Klasa sistemska operacija vrati klijenta koja nasledjuje abstraktnu klasu
+ * AbstractGenericOperation. Vraca klijenta iz baze na osnovu emaila i lozinke.
  *
  * @author sleza
  */
 public class SOVratiKlijentaBezPrimarnogKljuca extends AbstractGenericOperation {
+
     /**
      * Objekat klase GeneralEntity koji treba da primi vrednosti iz baze.
      */
     private GeneralEntity klijent;
-    
-     /**
+
+    /**
      * Proverava da li je objekat klase klijent i ako nije baca exception.
      *
      * @param entity - objekat klase Klijent.
      *
      * @throws Exception u slučaju da je kao parametar dat objekat druge klase.
-     * @throws InvalidProductException u slučaju da atributi koji se koriste za upit nisu dobro uneti ili nisu uneti.
+     * @throws InvalidProductException u slučaju da atributi koji se koriste za
+     * upit nisu dobro uneti ili nisu uneti.
      */
-    
     @Override
     protected void validate(Object entity) throws Exception, InvalidProductException {
         if (!(entity instanceof Klijent)) {
@@ -43,24 +44,28 @@ public class SOVratiKlijentaBezPrimarnogKljuca extends AbstractGenericOperation 
             throw new InvalidProductException("Sva polja moraju biti popunjena!!");
         }
     }
-     /**
-     * Izvršava upit(Select) nad bazom podataka, baca dve vrste izuzetka:
+
+    /**
+     * execute query(Select) nad database podataka, baca dve vrste izuzetka:
      *
-     * @param entity - objekat klase Klijent.
+     * @param entity - object class Klijent.
+     * @throws EntityNotFoundException
+     * @throws SQLException
      *
      */
     @Override
     protected void execute(Object entity) throws EntityNotFoundException, SQLException {
         try {
             klijent = databaseBroker.findRecordNoPrimaryKey((Klijent) entity);
-        } catch (SQLException ex) {
-            throw new SQLException("Greška na strani servera");
         } catch (EntityNotFoundException ex) {
             throw new EntityNotFoundException("Sistem ne moze da pronađe korisnika!");
+        } catch (SQLException ex) {
+            throw new SQLException("Greška na strani servera");
         }
     }
+
     /**
-     * 
+     *
      * @return GeneralEntity(Klijent) rezultat pretrage nad bazom podataka.
      */
     public GeneralEntity getKlijent() {

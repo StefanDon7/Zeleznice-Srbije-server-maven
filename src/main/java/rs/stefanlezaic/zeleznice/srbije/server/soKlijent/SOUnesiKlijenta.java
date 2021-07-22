@@ -65,7 +65,7 @@ public class SOUnesiKlijenta extends AbstractGenericOperation {
             Klijent k=(Klijent) entity;
             m.sendRegistrationMail(k.getEmail());
         } catch (InsertEntityException ex) {
-            throw new InsertEntityException("Sistem ne moze da registruje korisnika");
+            throw new InsertEntityException("Sistem ne moze da registruje korisnika.");
         } catch (SQLException ex) {
             throw new SQLException("Greska na strani sistema!");
         }

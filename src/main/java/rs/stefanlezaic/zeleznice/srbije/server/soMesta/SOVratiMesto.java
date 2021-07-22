@@ -19,19 +19,20 @@ import rs.stefanlezaic.zeleznice.srbije.server.so.AbstractGenericOperation;
  * @author sleza
  */
 public class SOVratiMesto extends AbstractGenericOperation {
-    
+
     /**
      * Objekat klase GeneralEntity koji treba da primi vrednosti iz baze.
      */
     private GeneralEntity mesto;
-    
-     /**
+
+    /**
      * Proverava da li je objekat klase mesto i ako nije baca exception.
      *
      * @param entity - objekat klase Mesto.
      *
      * @throws Exception u slučaju da je kao parametar dat objekat druge klase.
-     * @throws InvalidProductException u slučaju da atributi koji služe za upit nisu dobro uneti ili nisu uneti.
+     * @throws InvalidProductException u slučaju da atributi koji služe za upit
+     * nisu dobro uneti ili nisu uneti.
      */
     @Override
     protected void validate(Object entity) throws InvalidProductException, Exception {
@@ -43,8 +44,8 @@ public class SOVratiMesto extends AbstractGenericOperation {
             throw new InvalidProductException("Pogresni parametri!");
         }
     }
-    
-     /**
+
+    /**
      * Izvršava upit(Select) nad bazom podataka, baca dve vrste izuzetka:
      *
      * @param entity - objekat klase Mesto.
@@ -54,16 +55,16 @@ public class SOVratiMesto extends AbstractGenericOperation {
     protected void execute(Object entity) throws EntityNotFoundException, SQLException {
         try {
             mesto = databaseBroker.findRecord((Mesto) entity);
-        } catch (SQLException ex) {
-            throw new SQLException("Greška na strani servera");
         } catch (EntityNotFoundException ex) {
             throw new EntityNotFoundException("Sistem ne moze da pronadje mesto!");
+        } catch (SQLException ex) {
+            throw new SQLException("Greška na strani servera");
         }
     }
-    
-     /**
+
+    /**
      * Vraca GeneralEntity(Mesto) rezultat pretrage nad bazom podataka.
-     * 
+     *
      * @return GeneralEntity(Mesto).
      */
     public GeneralEntity getMesto() {

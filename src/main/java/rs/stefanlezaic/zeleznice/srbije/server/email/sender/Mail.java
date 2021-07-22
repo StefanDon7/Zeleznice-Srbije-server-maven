@@ -27,16 +27,34 @@ public class Mail {
     public void sendRegistrationMail(String email) {
         String[] to = {email};
         String subject = "ŽELEZNICE SRBIJE";
-        String body = "Uspešno ste se registrovali!";
+        String body
+                = "<html>\n"
+                + "<div class=\"div\">\n"
+                + "    <h1>Železnice Srbije</h1>\n"
+                + "    \n"
+                + "    <p>Uspšeno ste se registrovali!</p>\n"
+                + "     <p>Hvala na poverenju!</p>"
+                + "</div>    \n"
+                + "</html>";
         sendFromGMail(to, subject, body);
     }
 
     public void sendMail(String[] emails, Polazak p) {
         String[] to = emails;
         String subject = "ŽELEZNICE SRBIJE";
-        String body = "Obaveštenje vezano za polazak"+p.getNaziv()+"\n";
-        body+=p.getNapomena();
-        
+        String body
+                = "<html>\n"
+                + "<div class=\"div\">\n"
+                + "    <h1>Železnice Srbije</h1>\n"
+                + "    \n"
+                + "     <p>Obaveštenje vezano za polazak:</p>\n"
+                + "     <p>" + p.getNaziv() + "</p>\n"
+                + "<p>\n</p>"
+                + "<p>\n</p>"
+                + "     <p>" + p.getNapomena() + "</p>\n"
+                + "</div>    \n"
+                + "</html>";
+
         sendFromGMail(to, subject, body);
     }
 
@@ -73,6 +91,7 @@ public class Mail {
 
             message.setSubject(subject);
             message.setText(body);
+            message.setContent(body, "text/html; charset=utf-8");
 
             Transport transport = session.getTransport("smtp");
 

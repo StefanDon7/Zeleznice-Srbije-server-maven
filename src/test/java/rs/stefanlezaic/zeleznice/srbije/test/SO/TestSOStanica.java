@@ -119,7 +119,7 @@ public class TestSOStanica {
 
     @Test(expected = Exception.class)
     public void testUnesiStanicu() throws Exception {
-        s = new Stanica(-1, "Novi Sad", new Mesto(3));
+        s = new Stanica(-1, "Novi Sad", new Mesto(1));
         AbstractGenericOperation ago = new SOUnesiStanicu();
         ago.templateExecute(s);
     }

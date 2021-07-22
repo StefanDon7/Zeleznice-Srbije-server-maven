@@ -38,6 +38,7 @@ C:\2.NetBeans\ZelezniceSrbije-server-maven\src\main\java\rs\stefanlezaic\zelezni
 C:\2.NetBeans\ZelezniceSrbije-server-maven\src\main\java\rs\stefanlezaic\zeleznice\srbije\server\util\SettingsLoader.java
 C:\2.NetBeans\ZelezniceSrbije-server-maven\src\main\java\rs\stefanlezaic\zeleznice\srbije\server\so\AbstractGenericOperation.java
 C:\2.NetBeans\ZelezniceSrbije-server-maven\src\main\java\rs\stefanlezaic\zeleznice\srbije\server\soMedjustanica\SOObrisiMedjustanicu.java
+C:\2.NetBeans\ZelezniceSrbije-server-maven\src\main\java\rs\stefanlezaic\zeleznice\srbije\server\soKlijent\SOVratiSveKlijenteZaPolazak.java
 C:\2.NetBeans\ZelezniceSrbije-server-maven\src\main\java\rs\stefanlezaic\zeleznice\srbije\server\soVoz\SOVratiVoz.java
 C:\2.NetBeans\ZelezniceSrbije-server-maven\src\main\java\rs\stefanlezaic\zeleznice\srbije\server\soKlijent\SOVratiKlijenta.java
 C:\2.NetBeans\ZelezniceSrbije-server-maven\src\main\java\rs\stefanlezaic\zeleznice\srbije\server\soLinija\SOVratiLiniju.java

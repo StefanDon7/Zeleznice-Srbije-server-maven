@@ -2,6 +2,7 @@ rs\stefanlezaic\zeleznice\srbije\server\soKlijent\SOIzmeniKlijenta.class
 rs\stefanlezaic\zeleznice\srbije\server\main\Main.class
 rs\stefanlezaic\zeleznice\srbije\server\soPolazak\SOVratiSvePolaske.class
 rs\stefanlezaic\zeleznice\srbije\server\soTipLinije\SOVratiTipLinije.class
+rs\stefanlezaic\zeleznice\srbije\server\soKlijent\SOVratiSveKlijenteZaPolazak.class
 rs\stefanlezaic\zeleznice\srbije\server\soTipLinije\SOVratiSveTipoveLinija.class
 rs\stefanlezaic\zeleznice\srbije\server\soStanica\SOVratiStanicuBezPrimarnogKljuca.class
 rs\stefanlezaic\zeleznice\srbije\server\soMedjustanica\SOIzmeniMedjustanicu.class

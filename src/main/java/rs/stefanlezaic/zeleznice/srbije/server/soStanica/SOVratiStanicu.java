@@ -15,23 +15,26 @@ import rs.stefanlezaic.zeleznice.srbije.lib.exception.ParametarsException;
 import rs.stefanlezaic.zeleznice.srbije.server.so.AbstractGenericOperation;
 
 /**
- * Klasa VratiMedjustanicu koja nasledjuje abstraktnu klasu AbstractGenericOperation.
- * Vraca stanicu iz baze na osnovu id.
+ * Klasa VratiMedjustanicu koja nasledjuje abstraktnu klasu
+ * AbstractGenericOperation. Vraca stanicu iz baze na osnovu id.
  *
  * @author sleza
  */
 public class SOVratiStanicu extends AbstractGenericOperation {
+
     /**
      * Objekat klase GeneralEntity koji treba da primi vrednosti iz baze.
      */
     private GeneralEntity stanica;
-/**
+
+    /**
      * Proverava da li je objekat klase Stanica i ako nije baca exception.
      *
      * @param entity - objekat klase Stanica.
      *
      * @throws Exception u slučaju da je kao parametar dat objekat druge klase.
-     * @throws InvalidProductException u slučaju da atributi koji se koriste za upit nisu dobro uneti ili nisu uneti.
+     * @throws InvalidProductException u slučaju da atributi koji se koriste za
+     * upit nisu dobro uneti ili nisu uneti.
      */
     @Override
     protected void validate(Object entity) throws InvalidProductException, Exception {
@@ -43,7 +46,8 @@ public class SOVratiStanicu extends AbstractGenericOperation {
             throw new InvalidProductException("Primarni kljuc je manji od nule!");
         }
     }
-     /**
+
+    /**
      * Izvršava upit(Select) nad bazom podataka, baca dve vrste izuzetka:
      *
      * @param entity - objekat klase Medjustanica.
@@ -62,16 +66,17 @@ public class SOVratiStanicu extends AbstractGenericOperation {
             stanica = databaseBroker.findRecord((Stanica) entity);
             Stanica s = (Stanica) stanica;
             s.setMesto((Mesto) databaseBroker.findRecord(new Mesto(s.getMesto().getMestoID())));
-        } catch (SQLException ex) {
-            throw new SQLException("Greška na strani servera");
         } catch (EntityNotFoundException ex) {
             throw new EntityNotFoundException("Sistem ne moze da nadje stanicu");
+        } catch (SQLException ex) {
+            throw new SQLException("Greška na strani servera");
         }
     }
-     /**
+
+    /**
      * Vraca GeneralEntity(Stanica) rezultat pretrage nad bazom podataka.
-     * 
-     * @return GeneralEntity(Stanica). 
+     *
+     * @return GeneralEntity(Stanica).
      */
     public GeneralEntity getStanica() {
         return stanica;

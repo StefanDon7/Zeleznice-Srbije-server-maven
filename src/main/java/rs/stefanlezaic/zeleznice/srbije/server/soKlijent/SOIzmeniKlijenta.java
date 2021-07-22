@@ -38,7 +38,6 @@ public class SOIzmeniKlijenta extends AbstractGenericOperation {
         if (k.getEmail().isEmpty() || k.getIme().isEmpty() || k.getPrezime().isEmpty() || k.getKorisnickoIme().isEmpty() || k.getLozinka().isEmpty()) {
             throw new InvalidProductException("Sva polja moraju biti popunjena!!");
         }
-
     }
 
     /**
@@ -53,7 +52,7 @@ public class SOIzmeniKlijenta extends AbstractGenericOperation {
         try {
             databaseBroker.updateRecord((GeneralEntity) entity);
         } catch (UpdateEntityException ex) {
-            throw new UpdateEntityException("Sistem ne može da izmeni podatke o klijentu");
+            throw new UpdateEntityException("Sistem ne može da izmeni podatke o klijentu.");
         } catch (SQLException ex) {
             throw new SQLException("Greska na strani sistema!");
         }
