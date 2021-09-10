@@ -22,7 +22,7 @@ import rs.stefanlezaic.zeleznice.srbije.lib.domen.Polazak;
 public class Mail {
 
     private static String USER_NAME = "srbijezeleznice";  // GMail user name (just the part before "@gmail.com")
-    private static String PASSWORD = "zeleznice123"; // GMail password
+    private static String PASSWORD = "lcvvdaoiswrcxidh"; // GMail password
 
     public void sendRegistrationMail(String email) {
         String[] to = {email};
